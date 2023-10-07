@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #f3f3f3;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #1F45FC;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #2B60DE;
+        }
+        
+        #data-table {
+    		border: 1px solid #ccc;
+    		width: 100%;
+    		margin-top: 10px;
+		}
+
+		#data-table th,
+		#data-table td {
+    		border: 1px solid #ccc;
+    		padding: 8px;
+		}
+
+		#data-table th {
+    		background-color: #95B9C7;
+    		color: white;
+    		border: 1px solid #95B9C7;
+		}
+        #data-table tr:nth-child(even) {
+    		background-color: #f2f2f2;
+		}
+
+		#data-table tr:nth-child(odd) {
+    		background-color: #ffffff;
+		}
+        
+    </style>
+</head>
+<body>
+    <h2>Percobaan Pengambilan Data</h2>
+    <form id="form1">
+        <label for="input">Masukkan URL:</label>
+        <input type="text" id="input" name="input" placeholder="Masukkan URL Link"><br>
+        <input id="fetchButton" type="submit" value="SUBMIT">
+    </form>
+
+    <div id="table-container">
+        <table id="data-table"></table>
+    </div>
+    
+    <script>
+        document.getElementById('form1').addEventListener('submit', function(event) {
+    event.preventDefault();
+    fetchData();
+});
+
+function fetchData() {
+    const urlInput = document.getElementById('input').value;
+    const tableContainer = document.getElementById('table-container');
+    const dataTable = document.getElementById('data-table');
+
+    const xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                const data = JSON.parse(xhr.responseText);
+
+                dataTable.innerHTML = '';
+
+                const headerRow = document.createElement('tr');
+                for (const key in data[0]) {
+                    if (data[0].hasOwnProperty(key)) {
+                        const headerCell = document.createElement('th');
+                        headerCell.textContent = key;
+                        headerRow.appendChild(headerCell);
+                    }
+                }
+                dataTable.appendChild(headerRow);
+
+                data.forEach(function(item) {
+                    const dataRow = document.createElement('tr');
+                    for (const key in item) {
+                        if (item.hasOwnProperty(key)) {
+                            const dataCell = document.createElement('td');
+                            dataCell.textContent = item[key];
+                            dataRow.appendChild(dataCell);
+                        }
+                    }
+                    dataTable.appendChild(dataRow);
+                });
+
+                tableContainer.style.display = 'block';
+            } else {
+            
+            }
+        }
+    };
+
+    xhr.open('GET', urlInput, true);
+    xhr.send();
+}
+    </script>
+</body>
+</html>
