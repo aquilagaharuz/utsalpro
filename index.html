@@ -89,15 +89,40 @@
         <input id="fetchButton" type="submit" value="SUBMIT">
     </form>
 
+<label for="sort">Sort by:</label>
+    <select id="sort">
+        <option value="name">Name</option>
+        <option value="age">Age</option>
+        <!-- Add more options based on your data columns -->
+    </select>
+    <label for="order">Sort order:</label>
+    <select id="order">
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+    </select>
+    <button id="sortButton">Sort</button>
+
+    <label for="search">Search:</label>
+    <input type="text" id="search" name="search" placeholder="Enter search query">
+    <button id="searchButton">Search</button>
+
     <div id="table-container">
         <table id="data-table"></table>
     </div>
-    
+
     <script>
         document.getElementById('form1').addEventListener('submit', function(event) {
-    event.preventDefault();
-    fetchData();
-});
+            event.preventDefault();
+            fetchData();
+        });
+
+        document.getElementById('sortButton').addEventListener('click', function(event) {
+            sortData();
+        });
+
+        document.getElementById('searchButton').addEventListener('click', function(event) {
+            searchData();
+        });
 
 function fetchData() {
     const urlInput = document.getElementById('input').value;
@@ -145,6 +170,14 @@ function fetchData() {
     xhr.open('GET', urlInput, true);
     xhr.send();
 }
+function sortData() {
+            // ... (sorting code, as provided in the previous response) ...
+        }
+
+function searchData() {
+            // ... (searching code, as provided in the previous response) ...
+        }
     </script>
 </body>
+
 </html>
